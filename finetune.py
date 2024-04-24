@@ -70,7 +70,7 @@ def finetune(dataset, pretrained_file, fix_enc=True, **kwargs):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', type=str, default='Scientific', help='dataset name')
-    parser.add_argument('-p', type=str, default='', help='pre-trained model path')
+    parser.add_argument('-p', type=str, default='saved/UniSRec-G-50.pth', help='pre-trained model path')
     parser.add_argument('-f', type=bool, default=True)
     args, unparsed = parser.parse_known_args()
     print(args)

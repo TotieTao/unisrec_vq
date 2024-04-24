@@ -154,4 +154,4 @@ class PLMEmb:
             'item_emb_list_long_aug': item_emb_seq_long_aug,
         }))
 
-        return interaction
+        return interaction.to(0)

@@ -1,12 +1,14 @@
 import argparse
 from logging import getLogger
 from recbole.config import Config
-from recbole.trainer.trainer import PretrainTrainer
 from recbole.utils import init_seed, init_logger
 
 from unisrec import UniSRec
 from data.dataset import PretrainUniSRecDataset
 from data.dataloader import CustomizedTrainDataLoader
+# from recbole.trainer.trainer import PretrainTrainer
+from trainer_single import PretrainTrainer
+
 
 
 def pretrain(dataset, **kwargs):
@@ -24,10 +26,14 @@ def pretrain(dataset, **kwargs):
 
     # dataset filtering
     dataset = PretrainUniSRecDataset(config)
+    kmeans_dataset = PretrainUniSRecDataset(config)
     logger.info(dataset)
 
     pretrain_dataset = dataset.build()[0]
     pretrain_data = CustomizedTrainDataLoader(config, pretrain_dataset, None, shuffle=True)
+
+    prekmeans_dataset = kmeans_dataset.build()[0]
+    prekmeans_data = CustomizedTrainDataLoader(config, prekmeans_dataset, None, shuffle=True)
 
     # model loading and initialization
     model = UniSRec(config, pretrain_data.dataset).to(config['device'])
@@ -37,7 +43,7 @@ def pretrain(dataset, **kwargs):
     trainer = PretrainTrainer(config, model)
 
     # model pre-training
-    trainer.pretrain(pretrain_data, show_progress=True)
+    trainer.pretrain(pretrain_data, prekmeans_data, show_progress=True)
 
     return config['model'], config['dataset']
 

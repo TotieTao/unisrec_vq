@@ -21,3 +21,11 @@ adaptor_dropout_prob: 0.2
 adaptor_layers: [768,300]
 temperature: 0.07
 n_exps: 8
+
+short_num_cluster: 100
+proto_topK: 5
+projection_size: 300
+adaptor_output_size: 300
+kmeans_epochs: 10
+long_num_cluster: 6
+
